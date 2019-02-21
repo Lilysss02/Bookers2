@@ -1,0 +1,38 @@
+<!--- マイページ --->
+<div class="container">
+	<div class="row">
+        <div class="col-xs-3">
+        	<!--- @user = current_user  @book = Book.new --->
+            <%= render 'users/list', user: @user, book: @book %>
+        </div>
+
+        <div class ="col-xs-9">
+            <h2>Books</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Opinion</th>
+                    </tr>
+                </thead>
+
+                <!--- @books = @user.books で自分の投稿のみを表示 --->
+                <% @books.each do |book| %>
+
+                <tbody>
+                    <tr>
+                        <td><%= attachment_image_tag book.user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", class: "no_image" %></td>
+                        <!--- 自分の投稿の詳細 --->
+                        <td><%= link_to book_path(book.id), class: "book_#{book.id}" do %>
+                        	<%= book.title %>
+                        	<% end %>
+                        </td>
+                        <td><%= book.opinion %></td>
+                    </tr>
+                </tbody>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>Bookers2</title>
+  <meta charset="utf-8">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <style>
+  body {
+    padding-top: 50px;
+  }
+  .container {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  /* リンクの色をグレーに */
+  a {
+    color: #666;
+  }
+
+  /* トップページのボタン */
+  .btn-info {
+    color: #666;
+  }
+  .btn-success {
+    color: #666;
+  }
+  .btn-danger {
+    color: #666;
+  }
+  /* Bookersタイトル */
+  .navbar-bland {
+    color: #FFF;
+  }
+  .alert {
+    color: green;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .field {
+    margin-bottom: 10px;
+  }
+  .actions {
+    margin-bottom: 10px;
+  }
+  /* エラーメッセージを赤字に */
+  #error_explanation {
+    color: red;
+  }
+  /* デフォルトのプロフィール画像サイズ */
+  .no_image {
+    width: 50px;
+    height: 50px;
+  }
+</style>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="nav navbar-nav navbar-left">
+        <h4 class="navbar-bland">Bookers</h4>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+        <li>
+          <%= link_to user_path(current_user.id), class: "user_#{current_user.id}" do %>
+          <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to users_path, class: "users" do %>
+          <span class="glyphicon glyphicon-user" aria-hidden="true"> Users</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to books_path, class: "books" do %>
+          <span class="glyphicon glyphicon-book" aria-hidden="true"> Books</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to destroy_user_session_path, method: :delete, class: "logout" do%>
+          <span class="glyphicon glyphicon-log-out" aria-hidden="true"> logout</span>
+          <% end %>
+        </li>
+        <% else %>
+        <li>
+          <%= link_to root_path, class: "home" do %>
+          <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to "/about", class: "about" do %>
+          <span class="glyphicon glyphicon-link" aria-hidden="true"> About</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to new_user_registration_path, class: "sign_up" do %>
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"> sign up</span>
+          <% end %>
+        </li>
+        <li>
+          <%=link_to new_user_session_path, class: "sign_in" do %>
+          <span class="glyphicon glyphicon-log-in" aria-hidden="true"> login</span>
+          <% end %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+
+  <!--- エラーメッセージ --->
+  <div class="container">
+    <% if flash[:notice] %>
+    <p class="alert alert-notice"><%= notice %></p>
+    <% end %>
+  </div>
+        <%= yield %>
+
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-offset-9 col-md-3">
+                <p>CopyRight Infratop.inc</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+</body>
+</html>
