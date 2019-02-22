@@ -68,7 +68,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
         <li>
-          <%= link_to user_path(current_user.id), class: "user_#{current_user.id}" do %>
+          <%= link_to user_path(current_user.id), class: "home" do %>
           <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
           <% end %>
         </li>

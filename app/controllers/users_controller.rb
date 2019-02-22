@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  # 正しいユーザーかを確かめる
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   # ユーザー一覧
   def index
@@ -42,5 +44,12 @@ class UsersController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :opinion)
+  end
+
+  def ensure_correct_user
+    user = User.find(params[:id])
+    if user != current_user
+      redirect_to root_path
+    end
   end
 end

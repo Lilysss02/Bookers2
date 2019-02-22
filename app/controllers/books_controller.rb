@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
 	before_action :authenticate_user!
+	before_action :ensure_correct_user, only: [:edit, :update]
 
 	def index
 		@books = Book.all
@@ -58,5 +59,13 @@ class BooksController < ApplicationController
 
 	def book_params
 		params.require(:book).permit(:title, :opinion)
+	end
+
+	def ensure_correct_user
+		book = Book.find(params[:id])
+		user = User.find(book.user_id)
+		if user != current_user
+			redirect_to root_path
+		end
 	end
 end
